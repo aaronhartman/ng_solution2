@@ -17,7 +17,7 @@
     <!-- To Buy List -->
     <div class="col-md-6" ng-controller='ToBuyShoppingController as list'>
      <h2>To Buy:</h2>
-     <div class="listControl" ng-controller='AddItemController as itemAdder'>
+     <div ng-controller='AddItemController as itemAdder'>
      <input type="text" ng-model="itemAdder.nameToAdd" placeholder="add new item">
      <input type="text" ng-model="itemAdder.quantityToAdd" placeholder="enter quantity">
      <button ng-click="itemAdder.addItem();">Add Item</button>
