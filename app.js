@@ -4,6 +4,7 @@
 angular.module('ShoppingListCheckoff', [])
 .controller('ToBuyShoppingController', ToBuyShoppingController)
 .controller('AlreadyBoughtShoppingController', AlreadyBoughtShoppingController)
+.controller('AddItemController', AddItemController)
 .service('ShoppingListCheckoffService', ShoppingListCheckoffService);
 
 ToBuyShoppingController.$inject = ['ShoppingListCheckoffService'];
@@ -30,18 +31,34 @@ function AlreadyBoughtShoppingController(ShoppingListCheckoffService) {
   };
 }
 
+AddItemController.$inject = ['ShoppingListCheckoffService'];
+function AddItemController(ShoppingListCheckoffService) {
+  var itemAdder = this;
+
+  itemAdder.nameToAdd = "";
+  itemAdder.quantityToAdd = "";
+  itemAdder.addItem = function () {
+  	ShoppingListCheckoffService.addItem(itemAdder.nameToAdd, itemAdder.quantityToAdd);
+  };
+}
+
 function ShoppingListCheckoffService() {
   var service = this;
 
   var itemsToBuy = [
-  				{name: "butter", quantity: "2 lbs"},
-  				{name: "eggs", quantity: "1 dozen"},
-  				{name: "flour", quantity: "5 lbs"},
-  				{name: "granulated sugar", quantity: "2 lbs"},
-  				{name: "brown sugar", quantity: "2 lbs"},
-  				{name: "baking soda", quantity: "1 box"}
+  				{ name: "butter", quantity: "2 lbs" },
+  				{ name: "butter", quantity: "2 lbs" },
+  				{ name: "flour", quantity: "5 lbs" },
+  				{ name: "granulated sugar", quantity: "2 lbs" },
+  				{ name: "brown sugar", quantity: "2 lbs" },
+  				{ name: "baking soda", quantity: "1 box" }
   			];
   var itemsBought = [];
+
+  service.addItem = function (itemName, itemQuantity) {
+  	var item = { name: itemName, quantity: itemQuantity };
+  	itemsToBuy.push(item);
+  }
 
   service.markItemBought = function (itemIndex) {
     var item = itemsToBuy[itemIndex];

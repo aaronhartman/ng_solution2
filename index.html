@@ -34,9 +34,14 @@
     <div class="col-md-6" ng-controller='ToBuyShoppingController as list'>
      <h2>To Buy:</h2>
      <ul>
-       <li ng-repeat="item in list.items">Buy {{ item.quantity }} {{ item.name }} <button class="btn btn-default" ng-click="list.markBought($index);"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
+       <li ng-repeat="item in list.items">Buy {{ item.quantity }} {{ item.name }} <button class="btn btn-default" ng-click="list.markBought($index);"><span class="glyphicon glyphicon-ok"></span> Mark as Bought</button></li>
     </ul>
      <div class="emptyMessage" ng-if="list.isEmpty()">Everything is bought!</div>
+     <div ng-controller='AddItemController as itemAdder'>
+     <input type="text" ng-model="itemAdder.nameToAdd" placeholder="add new item">
+     <input type="text" ng-model="itemAdder.quantityToAdd" placeholder="enter quantity">
+     <button ng-click="itemAdder.addItem();">Add Item</button>
+     </div>
     </div>
 
     <!-- Already Bought List -->
