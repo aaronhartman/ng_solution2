@@ -5,6 +5,7 @@ angular.module('ShoppingListCheckoff', [])
 .controller('ToBuyShoppingController', ToBuyShoppingController)
 .controller('AlreadyBoughtShoppingController', AlreadyBoughtShoppingController)
 .controller('AddItemController', AddItemController)
+.controller('ClearBoughtItemsController', ClearBoughtItemsController) 
 .service('ShoppingListCheckoffService', ShoppingListCheckoffService);
 
 ToBuyShoppingController.$inject = ['ShoppingListCheckoffService'];
@@ -25,7 +26,10 @@ AlreadyBoughtShoppingController.$inject = ['ShoppingListCheckoffService'];
 function AlreadyBoughtShoppingController(ShoppingListCheckoffService) {
   var boughtItems = this;
 
-  boughtItems.items = ShoppingListCheckoffService.getBoughtItems();
+  boughtItems.items = function () {
+  	return ShoppingListCheckoffService.getBoughtItems();
+  };
+
   boughtItems.isEmpty = function () {
   	return ShoppingListCheckoffService.boughtItemsIsEmpty();
   };
@@ -42,11 +46,20 @@ function AddItemController(ShoppingListCheckoffService) {
   };
 }
 
+ClearBoughtItemsController.$inject = ['ShoppingListCheckoffService'];
+function ClearBoughtItemsController(ShoppingListCheckoffService) {
+  var boughtListEraser = this;
+
+  boughtListEraser.clear = function() {
+	ShoppingListCheckoffService.clearBoughtItems();
+  };
+}
+
 function ShoppingListCheckoffService() {
   var service = this;
 
   var itemsToBuy = [
-  				{ name: "butter", quantity: "2 lbs" },
+  				{ name: "eggs", quantity: "2 dozen" },
   				{ name: "butter", quantity: "2 lbs" },
   				{ name: "flour", quantity: "5 lbs" },
   				{ name: "granulated sugar", quantity: "2 lbs" },
@@ -76,6 +89,10 @@ function ShoppingListCheckoffService() {
 
   service.getBoughtItems = function () {
     return itemsBought;
+  };
+
+  service.clearBoughtItems = function () {
+  	itemsBought = [];
   };
 
   service.boughtItemsIsEmpty = function () {

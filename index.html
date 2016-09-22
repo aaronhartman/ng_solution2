@@ -6,23 +6,7 @@
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
     <link rel="stylesheet" href="styles/bootstrap.min.css">
-    <style>
-      .emptyMessage {
-        font-weight: bold;
-        color: red;
-        font-size: 1.2em;
-      }
-      li {
-        margin-bottom: 7px;
-        font-size: 1.2em;
-      }
-      li > button {
-        margin-left: 6px;
-      }
-      button > span {
-        color: green;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css">
   </head>
 <body>
   <div class="container">
@@ -33,25 +17,30 @@
     <!-- To Buy List -->
     <div class="col-md-6" ng-controller='ToBuyShoppingController as list'>
      <h2>To Buy:</h2>
-     <ul>
-       <li ng-repeat="item in list.items">Buy {{ item.quantity }} {{ item.name }} <button class="btn btn-default" ng-click="list.markBought($index);"><span class="glyphicon glyphicon-ok"></span> Mark as Bought</button></li>
-    </ul>
-     <div class="emptyMessage" ng-if="list.isEmpty()">Everything is bought!</div>
-     <div ng-controller='AddItemController as itemAdder'>
+     <div class="listControl" ng-controller='AddItemController as itemAdder'>
      <input type="text" ng-model="itemAdder.nameToAdd" placeholder="add new item">
      <input type="text" ng-model="itemAdder.quantityToAdd" placeholder="enter quantity">
      <button ng-click="itemAdder.addItem();">Add Item</button>
      </div>
+     <ul>
+       <li ng-repeat="item in list.items">Buy {{ item.quantity }} {{ item.name }} <button class="btn btn-default" ng-click="list.markBought($index);"><span class="glyphicon glyphicon-ok"></span> Mark as Bought</button></li>
+    </ul>
+     <div class="emptyMessage" ng-if="list.isEmpty()">Everything is bought!</div>
+     
     </div>
 
     <!-- Already Bought List -->
     <div class="col-md-6" ng-controller='AlreadyBoughtShoppingController as list'>
      <h2>Already Bought:</h2>
      <ul>
-       <li ng-repeat="item in list.items">Bought {{ item.quantity }} {{ item.name }}</li>
+       <li ng-repeat="item in list.items()">Bought {{ item.quantity }} {{ item.name }}</li>
      </ul>
      <div class="emptyMessage" ng-if="list.isEmpty()">Nothing bought yet.</div>
-    </div>
+    
+     <div ng-controller='ClearBoughtItemsController as eraser' ng-if="list.isEmpty() === false">
+     <button class="listControl" ng-click="eraser.clear();">Clear Bought Items</button>
+     </div>
+     </div>
   </div>
 </div>
 
